@@ -1,7 +1,7 @@
 {
     "version":            "1",
     "project_name":       "real_time_stats",
-    "project_version":    "22e80e2",
+    "project_version":    "edfbaf5-dirty",
     "project_path":       "C:/Users/jreina/Documents/MyWorkspaces/Espressif/real_time_stats",
     "idf_path":           "C:/Espressif/frameworks/esp-idf-v5.1.2",
     "build_dir":          "C:/Users/jreina/Documents/MyWorkspaces/Espressif/real_time_stats/build",
