@@ -1,30 +1,46 @@
 /* FreeRTOS Real Time Stats Example
 
-   This example code is in the Public Domain (or CC0 licensed, at your option.)
+   This example code is in the Public Domain
 
    Unless required by applicable law or agreed to in writing, this
    software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
    CONDITIONS OF ANY KIND, either express or implied.
 */
 
+//------------------------------------------- Includes -------------------------------------------//
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
+
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
+
 #include "esp_err.h"
 
-#define NUM_OF_SPIN_TASKS   6
-#define SPIN_ITER           500000  //Actual CPU cycles used will depend on compiler optimization
-#define SPIN_TASK_PRIO      2
-#define STATS_TASK_PRIO     3
-#define STATS_TICKS         pdMS_TO_TICKS(1000)
-#define ARRAY_SIZE_OFFSET   5   //Increase this if print_real_time_stats returns ESP_ERR_INVALID_SIZE
 
-static char task_names[NUM_OF_SPIN_TASKS][configMAX_TASK_NAME_LEN];
-static SemaphoreHandle_t sync_spin_task;
-static SemaphoreHandle_t sync_stats_task;
+//------------------------------------------ Definitions -----------------------------------------//
+
+#define NUM_OF_SPIN_TASKS   (6)
+#define SPIN_ITER           (500000)  				/* Actual cycles will depend on optimization  */
+#define SPIN_TASK_PRIO      (2)
+
+#define STATS_TASK_PRIO     (3)
+#define STATS_TICKS         pdMS_TO_TICKS(1000)
+
+#define ARRAY_SIZE_OFFSET   (5)   					/* Increase if ESP_ERR_INVALID_SIZE err 	  */
+
+
+//------------------------------------------ Variables -------------------------------------------//
+
+char task_names[NUM_OF_SPIN_TASKS][configMAX_TASK_NAME_LEN];
+
+SemaphoreHandle_t sync_spin_task;
+SemaphoreHandle_t sync_stats_task;
+
+
+//------------------------------------------- Routines -------------------------------------------//
 
 /**
  * @brief   Function to print the CPU usage of tasks over a given duration.
@@ -46,11 +62,11 @@ static SemaphoreHandle_t sync_stats_task;
  * @return
  *  - ESP_OK                Success
  *  - ESP_ERR_NO_MEM        Insufficient memory to allocated internal arrays
- *  - ESP_ERR_INVALID_SIZE  Insufficient array size for uxTaskGetSystemState. Trying increasing ARRAY_SIZE_OFFSET
+ *  - ESP_ERR_INVALID_SIZE  Insufficient array size for uxTaskGetSystemState. +ARRAY_SIZE_OFFSET
  *  - ESP_ERR_INVALID_STATE Delay duration too short
  */
-static esp_err_t print_real_time_stats(TickType_t xTicksToWait)
-{
+static esp_err_t print_real_time_stats(TickType_t xTicksToWait) {
+
     TaskStatus_t *start_array = NULL, *end_array = NULL;
     UBaseType_t start_array_size, end_array_size;
     uint32_t start_run_time, end_run_time;
@@ -130,13 +146,19 @@ static esp_err_t print_real_time_stats(TickType_t xTicksToWait)
 exit:    //Common return path
     free(start_array);
     free(end_array);
+
     return ret;
 }
 
-static void spin_task(void *arg)
-{
+
+/*
+ * @todo	header
+ */
+static void spin_task(void *arg) {
+
     xSemaphoreTake(sync_spin_task, portMAX_DELAY);
-    while (1) {
+
+    for(;;) {
         //Consume CPU cycles
         for (int i = 0; i < SPIN_ITER; i++) {
             __asm__ __volatile__("NOP");
@@ -145,8 +167,12 @@ static void spin_task(void *arg)
     }
 }
 
-static void stats_task(void *arg)
-{
+
+/*
+ * @todo	header
+ */
+static void stats_task(void *arg) {
+
     xSemaphoreTake(sync_stats_task, portMAX_DELAY);
 
     //Start all the spin tasks
@@ -155,19 +181,26 @@ static void stats_task(void *arg)
     }
 
     //Print real time stats periodically
-    while (1) {
+    for(;;) {
+
         printf("\n\nGetting real time stats over %"PRIu32" ticks\n", STATS_TICKS);
+
         if (print_real_time_stats(STATS_TICKS) == ESP_OK) {
             printf("Real time stats obtained\n");
         } else {
             printf("Error getting real time stats\n");
         }
+
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
 
-void app_main(void)
-{
+
+/*
+ * @todo	header
+ */
+void app_main(void) {
+
     //Allow other core to finish initialization
     vTaskDelay(pdMS_TO_TICKS(100));
 
@@ -184,4 +217,7 @@ void app_main(void)
     //Create and start stats task
     xTaskCreatePinnedToCore(stats_task, "stats", 4096, NULL, STATS_TASK_PRIO, NULL, tskNO_AFFINITY);
     xSemaphoreGive(sync_stats_task);
+
+    return;
 }
+
