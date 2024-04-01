@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/jreina/Documents/MyWorkspaces/Espressif/real_time_stats/main
+# Install script for directory: C:/Users/jreina/Documents/MyWorkspaces/Espressif/freertos_task/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

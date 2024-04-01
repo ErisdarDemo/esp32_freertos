@@ -39,6 +39,6 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/jreina/Documents/MyWorkspaces/Espressif/real_time_stats/build/esp-idf/esp_system/port/cmake_install.cmake")
+  include("C:/Users/jreina/Documents/MyWorkspaces/Espressif/freertos_task/build/esp-idf/esp_system/port/cmake_install.cmake")
 endif()
 

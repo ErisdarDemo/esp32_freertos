@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/jreina/Documents/MyWorkspaces/Espressif/real_time_stats/build/bootloader/esp-idf/cmake_install.cmake")
+  include("C:/Users/jreina/Documents/MyWorkspaces/Espressif/freertos_task/build/bootloader/esp-idf/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/jreina/Documents/MyWorkspaces/Espressif/real_time_stats/build/bootloader/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/jreina/Documents/MyWorkspaces/Espressif/freertos_task/build/bootloader/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

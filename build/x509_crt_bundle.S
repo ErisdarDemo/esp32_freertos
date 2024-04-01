@@ -1,4 +1,4 @@
-/* * Data converted from C:/Users/jreina/Documents/MyWorkspaces/Espressif/real_time_stats/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from C:/Users/jreina/Documents/MyWorkspaces/Espressif/freertos_task/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 .section .rodata.embedded
