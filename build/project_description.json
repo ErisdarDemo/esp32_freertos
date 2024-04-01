@@ -1,7 +1,7 @@
 {
     "version":            "1",
     "project_name":       "real_time_stats",
-    "project_version":    "693272c-dirty",
+    "project_version":    "5c319d1-dirty",
     "project_path":       "C:/Users/jreina/Documents/MyWorkspaces/Espressif/freertos_task",
     "idf_path":           "C:/Espressif/frameworks/esp-idf-v5.1.2",
     "build_dir":          "C:/Users/jreina/Documents/MyWorkspaces/Espressif/freertos_task/build",
